@@ -25,8 +25,16 @@ const CartProvider = ({ children }) => {
     const clearItemFromCart = item => setCartItems(filerItemFromCart(cartItems, item));
 
     useEffect(() => {
+        const data = localStorage.getItem('cartItems');
+        if (data) {
+            setCartItems(JSON.parse(data));
+        }
+    }, [])
+
+    useEffect(() => {
         setCartItemsCount(getCartItemsCount(cartItems));
         setCartTotalPrice(getCartTotal(cartItems));
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }, [cartItems])
 
     return(
